@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { createApi } from "unsplash-js";
-import { ArrowWrapper, CrouselWrapper, ImgWrapper } from "./Carousel.style";
+import {
+  ArrowWrapper,
+  CrouselWrapper,
+  DetailsWrapper,
+  ImgWrapper,
+} from "./Carousel.style";
 import { useStateValue } from "../../contexts/StateProvider";
-import { actionTypes } from "../../contexts/reducer";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import DownloadIcon from "@mui/icons-material/Download";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 export default function Carousel() {
-  const [{ Photodata, query }, dispatch] = useStateValue();
+  const [{ Photodata, query }] = useStateValue();
   const [current, setCurrent] = useState(1);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const unsplash = createApi({
       accessKey: "khYtkAFvv6TR9P0nFRUCH-TZS9UHrrAY43md8RcvOqM",
@@ -25,7 +32,6 @@ export default function Carousel() {
       } else {
         setCurrent(current === Photodata.length - 1 ? 0 : current + 1);
       }
-      console.log(current);
     };
     const Prev = () => {
       if (Photodata.length === 1) {
@@ -33,13 +39,42 @@ export default function Carousel() {
       } else {
         setCurrent(current === 0 ? Photodata.length - 1 : current - 1);
       }
-      console.log(current);
     };
     return (
       <ArrowWrapper>
         <ArrowBackIosIcon className={"icons"} onClick={Prev} />
         <ArrowForwardIosIcon className={"icons"} onClick={Next} />
       </ArrowWrapper>
+    );
+  };
+  const handleAccount = ({ val }) => {
+    window.open(val.user.portfolio_url);
+  };
+  const handleDownload = ({ val }) => {
+    if (val.links.download !== undefined) {
+      window.open(val.links.download);
+    } else {
+      window.open(val.cover_photo.links.download);
+    }
+  };
+  const Details = ({ val }) => {
+    return (
+      <DetailsWrapper>
+        <div className={"iconsWrapper"}>
+          <text>
+            {val.likes != undefined ? val.likes : val.cover_photo.likes}
+          </text>
+          <FavoriteIcon />
+        </div>
+        <AccountBoxIcon
+          onClick={() => handleAccount({ val })}
+          className={"icon"}
+        />
+        <DownloadIcon
+          onClick={() => handleDownload({ val })}
+          className={"icon"}
+        />
+      </DetailsWrapper>
     );
   };
   return Photodata.length === 1 ? (
@@ -49,25 +84,26 @@ export default function Carousel() {
           return (
             <ImgWrapper>
               {key === current - 1 && (
-                <img
-                  src={val.urls.raw}
-                  alt=""
-                  className={key === current - 1 ? "slide notactive" : "slide"}
-                />
+                <>
+                  <img src={val.urls.raw} alt="" className={"slide"} />
+                  <Details val={val} />
+                </>
               )}
               {key === current && (
-                <img
-                  src={val.urls.raw}
-                  alt=""
-                  className={key === current ? "slide active" : "slide"}
-                />
+                <>
+                  <img
+                    src={val.urls.raw}
+                    alt=""
+                    className={key === current ? "slide active" : "slide"}
+                  />
+                  <Details val={val} />
+                </>
               )}
               {key === current + 1 && (
-                <img
-                  src={val.urls.raw}
-                  alt=""
-                  className={key === current + 1 ? "slide notactive" : "slide"}
-                />
+                <>
+                  <img src={val.urls.raw} alt="" className={"slide"} />
+                  <Details val={val} />
+                </>
               )}
             </ImgWrapper>
           );
@@ -82,25 +118,26 @@ export default function Carousel() {
           return (
             <ImgWrapper>
               {key === current - 1 && (
-                <img
-                  src={val.urls.raw}
-                  alt=""
-                  className={key === current - 1 ? "slide notactive" : "slide"}
-                />
+                <>
+                  <img src={val.urls.raw} alt="" className={"slide"} />
+                  <Details val={val} isPhoto />
+                </>
               )}
               {key === current && (
-                <img
-                  src={val.urls.raw}
-                  alt=""
-                  className={key === current ? "slide active" : "slide"}
-                />
+                <>
+                  <img
+                    src={val.urls.raw}
+                    alt=""
+                    className={key === current ? "slide active" : "slide"}
+                  />
+                  <Details val={val} isPhoto />
+                </>
               )}
               {key === current + 1 && (
-                <img
-                  src={val.urls.raw}
-                  alt=""
-                  className={key === current + 1 ? "slide notactive" : "slide"}
-                />
+                <>
+                  <img src={val.urls.raw} alt="" className={"slide"} />
+                  <Details val={val} isPhoto />
+                </>
               )}
             </ImgWrapper>
           );
@@ -115,25 +152,34 @@ export default function Carousel() {
           return (
             <ImgWrapper>
               {key === current - 1 && (
-                <img
-                  src={val.cover_photo.urls.raw}
-                  alt=""
-                  className={key === current - 1 ? "slide notactive" : "slide"}
-                />
+                <>
+                  <img
+                    src={val.cover_photo.urls.raw}
+                    alt=""
+                    className={"slide"}
+                  />
+                  <Details val={val} isPhoto />
+                </>
               )}
               {key === current && (
-                <img
-                  src={val.cover_photo.urls.raw}
-                  alt=""
-                  className={key === current ? "slide active" : "slide"}
-                />
+                <>
+                  <img
+                    src={val.cover_photo.urls.raw}
+                    alt=""
+                    className={key === current ? "slide active" : "slide"}
+                  />
+                  <Details val={val} isPhoto />
+                </>
               )}
               {key === current + 1 && (
-                <img
-                  src={val.cover_photo.urls.raw}
-                  alt=""
-                  className={key === current + 1 ? "slide notactive" : "slide"}
-                />
+                <>
+                  <img
+                    src={val.cover_photo.urls.raw}
+                    alt=""
+                    className={"slide"}
+                  />
+                  <Details val={val} isPhoto />
+                </>
               )}
             </ImgWrapper>
           );

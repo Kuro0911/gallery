@@ -7,14 +7,8 @@ export const HeaderWrapper = styled.div`
   justify-content: space-around;
   h1 {
     color: #0070f3;
-    font-family: ui-serif;
+    font-family: sans-serif;
     font-size: 75px;
-  }
-  h1:hover,
-  h1:focus,
-  h1:active {
-    text-decoration: underline;
-    cursor: pointer;
   }
   .Button {
     max-height: 38px;

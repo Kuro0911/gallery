@@ -17,17 +17,27 @@ export const ImgWrapper = styled.div`
     object-fit: contain;
     height: 50vh;
     width: 45vw;
-    opacity: 0;
-    transition-duration: 1s ease;
+    opacity: 0.5;
   }
   .slide.active {
     opacity: 1;
-    transition-duration: 1s ease;
+    transition: opacity 1s ease-in;
     transform: scale(1.08);
   }
-  .slide.notactive {
-    opacity: 0.5;
-    transition-duration: 1s ease;
-    transform: scale(1.08);
+`;
+export const DetailsWrapper = styled.div`
+  text {
+    font-size: 1.5rem;
+  }
+  .icon {
+    cursor: pointer;
+  }
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-evenly;
+  .iconsWrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column-reverse;
   }
 `;
