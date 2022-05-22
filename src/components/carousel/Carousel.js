@@ -62,7 +62,7 @@ export default function Carousel() {
       <DetailsWrapper>
         <div className={"iconsWrapper"}>
           <text>
-            {val.likes != undefined ? val.likes : val.cover_photo.likes}
+            {val.likes !== undefined ? val.likes : val.cover_photo.likes}
           </text>
           <FavoriteIcon />
         </div>
