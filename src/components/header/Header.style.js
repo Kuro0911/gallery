@@ -1,5 +1,8 @@
 import styled from "styled-components";
 export const HeaderWrapper = styled.div`
+  .icon {
+    cursor: pointer;
+  }
   display: flex;
   margin-top: 5%;
   justify-content: space-around;
@@ -16,6 +19,6 @@ export const HeaderWrapper = styled.div`
   }
   .Button {
     max-height: 38px;
-    margin-top: 2em;
+    margin-right: 7%;
   }
 `;

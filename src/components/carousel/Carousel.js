@@ -5,7 +5,7 @@ import { useStateValue } from "../../contexts/StateProvider";
 import { actionTypes } from "../../contexts/reducer";
 
 export default function Carousel() {
-  const [{ Photodata }, dispatch] = useStateValue();
+  const [{ Photodata, query }, dispatch] = useStateValue();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -23,10 +23,16 @@ export default function Carousel() {
         return <img src={val.urls.thumb} alt="" />;
       })}
     </CrouselWrapper>
-  ) : (
+  ) : query.length < 1 ? (
     <CrouselWrapper>
       {Photodata.map((val) => {
         return <img src={val.urls.thumb} alt="" />;
+      })}
+    </CrouselWrapper>
+  ) : (
+    <CrouselWrapper>
+      {Photodata.map((val) => {
+        return <img src={val.cover_photo.urls.thumb} alt="" />;
       })}
     </CrouselWrapper>
   );
