@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { createApi } from "unsplash-js";
 import { CrouselWrapper } from "./Carousel.style";
+import { useStateValue } from "../../contexts/StateProvider";
+import { actionTypes } from "../../contexts/reducer";
 
 export default function Carousel() {
+  const [{ Photodata }, dispatch] = useStateValue();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -14,9 +17,15 @@ export default function Carousel() {
     });
   }, []);
   console.log(data);
-  return (
+  return Photodata.length === 1 ? (
     <CrouselWrapper>
       {data.map((val) => {
+        return <img src={val.urls.thumb} alt="" />;
+      })}
+    </CrouselWrapper>
+  ) : (
+    <CrouselWrapper>
+      {Photodata.map((val) => {
         return <img src={val.urls.thumb} alt="" />;
       })}
     </CrouselWrapper>
