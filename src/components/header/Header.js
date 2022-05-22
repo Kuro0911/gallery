@@ -72,7 +72,9 @@ function Header() {
   };
   return (
     <HeaderWrapper>
-      <h1>Gallery</h1>
+      <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+        <h1>Gallery</h1>
+      </Box>
       <Box sx={{ display: "flex", alignItems: "flex-end" }}>
         {!loading ? (
           <Button
